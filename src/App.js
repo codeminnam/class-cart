@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ProductsList from './pages/ProductsList';
-import Cart from './pages/Cart';
+import CartContainer from './containers/CartContainer';
+import ProductListContainer from './containers/ProductListContainer';
 
 const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/products" component={ProductsList} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/" component={ProductsList} />
+        <Route exact path="/products" component={ProductListContainer} />
+        <Route exact path="/cart" component={CartContainer} />
+        <Route exact path="/" component={ProductListContainer} />
       </Switch>
     </Router>
   );
