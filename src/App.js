@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
 import GlobalStyle from './theme/globalStyles';
 import Layout from './components/Layout';
 import CartContainer from './containers/CartContainer';
