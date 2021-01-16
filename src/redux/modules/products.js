@@ -1,29 +1,70 @@
-import { delay, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import ProductService from '../../services/ProductService';
 
-const INCREASE = 'products/INCREASE';
-const INCREASE_ASYNC = 'INCREASE_ASYNC';
+const GET_PRODUCTS = 'products/GET_PRODUCTS';
+const PENDING = 'products/PENDING';
+const SUCCESS = 'products/SUCCESS';
+const ERROR = 'products/ERROR';
 
-export const increase = () => ({ type: INCREASE });
-export const increaseAsync = () => ({ type: INCREASE_ASYNC });
+export const getProducts = () => ({ type: GET_PRODUCTS });
+export const pending = () => ({ type: PENDING });
+export const success = (products) => ({
+  type: SUCCESS,
+  payload: products,
+});
+export const error = (e) => ({ type: ERROR, payload: e });
 
-function* increaseSaga() {
-  yield delay(1000);
-  yield put(increase());
+function* getProductsSaga() {
+  try {
+    yield put({ type: PENDING });
+    const products = yield call(ProductService.getItems);
+    yield put({
+      type: SUCCESS,
+      payload: products,
+    });
+  } catch (e) {
+    yield put({
+      type: ERROR,
+      payload: e,
+    });
+  }
 }
 
 export function* productsSaga() {
-  yield takeEvery(INCREASE_ASYNC, increaseSaga);
+  yield takeEvery(GET_PRODUCTS, getProductsSaga);
 }
 
 const initialState = {
-  counter: 0,
+  products: null,
+  loading: false,
+  error: null,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case INCREASE:
+    case GET_PRODUCTS:
       return {
-        counter: state.counter + 1,
+        loading: false,
+        products: state.products,
+        error: null,
+      };
+    case PENDING:
+      return {
+        loading: true,
+        products: state.products,
+        error: null,
+      };
+    case SUCCESS:
+      return {
+        loading: false,
+        products: action.payload,
+        error: null,
+      };
+    case ERROR:
+      return {
+        loading: false,
+        products: null,
+        error: action.payload,
       };
     default:
       return state;

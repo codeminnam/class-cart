@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductList from '../components/ProductList';
-import { increaseAsync } from '../redux/modules/products';
+import { getProducts as getProductsSaga } from '../redux/modules/products';
 
 const ProductListContainer = () => {
-  const { counter } = useSelector((state) => ({
-    counter: state.products.counter,
-  }));
-
+  const { products } = useSelector((state) => state.products);
+  console.log(products);
   const dispatch = useDispatch();
 
-  const onIncrease = () => dispatch(increaseAsync());
+  useEffect(() => {
+    dispatch(getProductsSaga());
+  }, [dispatch]);
 
   return (
     <>
       <ProductList />
-      {counter}
-      <button type="button" onClick={() => onIncrease()}>
-        +
-      </button>
     </>
   );
 };

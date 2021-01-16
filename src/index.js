@@ -14,7 +14,6 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware, logger)),
 );
-console.log(store.getState());
 
 sagaMiddleware.run(rootSaga);
 
