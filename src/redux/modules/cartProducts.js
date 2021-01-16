@@ -25,6 +25,7 @@ export const setCurrentPage = (currentPage) => ({
 function* getProductsSaga(action) {
   try {
     yield put({ type: PENDING });
+    console.log(action.payload);
     const products = yield call(ProductService.getProducts, action.payload);
     yield put({
       type: SUCCESS,
@@ -44,7 +45,6 @@ export function* productsSaga() {
 
 const initialState = {
   products: null,
-  currentPage: 1,
   itemLength: null,
   loading: false,
   error: null,

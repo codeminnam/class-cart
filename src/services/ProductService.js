@@ -18,8 +18,6 @@ const ProductService = {
       itemLength,
     };
 
-    console.log(returnData);
-
     return returnData;
   },
 };
