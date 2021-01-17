@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
 import products, { productsSaga } from './products';
-import cartProducts from './cartProducts';
+import cartItems, { cartItemsSaga } from './cartItems';
 
 const rootReducer = combineReducers({
   products,
-  cartProducts,
+  cartItems,
 });
 export function* rootSaga() {
-  yield all([productsSaga()]);
+  yield all([productsSaga(), cartItemsSaga()]);
 }
 
 export default rootReducer;

@@ -5,6 +5,7 @@ import {
   getProducts as getProductsSaga,
   setCurrentPage,
 } from '../redux/modules/products';
+import CartService from '../services/CartService';
 
 const ProductListContainer = () => {
   const { products, itemLength, loading, error } = useSelector(
@@ -16,6 +17,12 @@ const ProductListContainer = () => {
   useEffect(() => {
     dispatch(getProductsSaga(1));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (CartService.getItem('class-cart')) {
+      setCartItems(JSON.parse(CartService.getItem('class-cart')));
+    }
+  }, []);
 
   const handleSetCurrentPage = (page) => {
     const pageNum = parseInt(page, 10);

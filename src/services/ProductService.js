@@ -20,6 +20,15 @@ const ProductService = {
 
     return returnData;
   },
+
+  getCartItems: async (cartArr) => {
+    const response = await axios.get(PRODUCTS_API_URL);
+    const allProducts = response.data;
+    const items = allProducts.filter((product) => {
+      return cartArr.includes(product.id);
+    });
+    return items.length ? { items } : {};
+  },
 };
 
 export default ProductService;
